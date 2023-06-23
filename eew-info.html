@@ -192,19 +192,19 @@
 
                         const date = document.createElement("td");
                         date.textContent = timestamp(data[id].sent, true);
-                        date.setAttribute("data-text", timestamp(data[id].sent, true));
+                        date.setAttribute("data-text", date.textContent);
 
                         const sent = document.createElement("td");
-                        sent.textContent = timestamp(data[id].sent);
-                        sent.setAttribute("data-text", timestamp(data[id].sent));
+                        sent.textContent = timestamp(data[id].sent).replace(".000", "");
+                        sent.setAttribute("data-text", sent.textContent);
 
                         const getTime = document.createElement("td");
                         getTime.textContent = timestamp(data[id].get, false, data[id].sent);
-                        getTime.setAttribute("data-text", timestamp(data[id].get, false, data[id].sent));
+                        getTime.setAttribute("data-text", getTime.textContent);
 
                         const time = document.createElement("td");
-                        time.textContent = timestamp(data[id].eq.time);
-                        time.setAttribute("data-text", timestamp(data[id].eq.time));
+                        time.textContent = timestamp(data[id].eq.time).replace(".000", "");
+                        time.setAttribute("data-text", time.textContent);
 
                         const loc = document.createElement("td");
                         loc.textContent = data[id].eq.loc;
@@ -225,7 +225,7 @@
                         depth.setAttribute("data-text", data[id].eq.depth);
 
                         const scale = document.createElement("td");
-                        scale.textContent = data[id].eq.scale;
+                        scale.textContent = data[id].eq.scale.toFixed(1);
                         scale.setAttribute("data-text", data[id].eq.scale);
 
                         const max = document.createElement("td");

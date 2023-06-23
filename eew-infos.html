@@ -173,7 +173,7 @@
                     }
                 }).then((data) => {
                     const frag = new DocumentFragment();
-                    
+
                     for (let i = 0, k = Object.keys(data), n = k.length, id = k[i]; i < n; i++, id = k[i]) {
                         const row = document.createElement("tr");
                         const ID = document.createElement("td");
@@ -189,7 +189,7 @@
                         date.setAttribute("data-text", date.textContent);
 
                         const time = document.createElement("td");
-                        time.textContent = timestamp(data[id].eq.time);
+                        time.textContent = timestamp(data[id].eq.time).replace(".000", "");
                         time.setAttribute("data-text", time.textContent);
 
                         const loc = document.createElement("td");
@@ -207,11 +207,11 @@
                         lon.setAttribute("data-text", lon.textContent);
 
                         const depth = document.createElement("td");
-                        depth.textContent = data[id].eq.depth ? `${data[id].eq.depth} ㎞` : "-";
+                        depth.textContent = `${data[id].eq.depth} ㎞`;
                         depth.setAttribute("data-text", depth.textContent);
 
                         const scale = document.createElement("td");
-                        scale.textContent = data[id].eq.scale ? `M ${data[id].eq.scale}` : "-";
+                        scale.textContent = `M ${data[id].eq.scale.toFixed(1)}`;
                         scale.setAttribute("data-text", scale.textContent);
 
                         const max = document.createElement("td");
