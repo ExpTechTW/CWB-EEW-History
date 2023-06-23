@@ -173,7 +173,11 @@
             Now += ":";
             if (now.getSeconds() < 10) Now += "0" + now.getSeconds().toString();
             else Now += now.getSeconds().toString();
-            return Now;
+            Now += ".";
+            if (now.getMilliseconds() < 10) Now += "00" + now.getMilliseconds().toString();
+            else if (now.getMilliseconds() < 100) Now += "0" + now.getMilliseconds().toString();
+            else Now += now.getMilliseconds().toString();
+            return Now.replace(".000", "");
         }
 
         function intensity_int_to_string(int) {

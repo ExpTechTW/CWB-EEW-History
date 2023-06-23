@@ -94,9 +94,6 @@
                     eew_table.innerHTML = `<tr>
                                                 <th> ID</th>
                                                 <th>報數</th>
-                                                <th>發布時間</th>
-                                                <th>接收時間</th>
-                                                <th></th>
                                                 <th>發震時間</th>
                                                 <th>震央地名</th>
                                                 <th>北緯</th>
@@ -114,11 +111,6 @@
                         ID.innerHTML = `<a style="color: white;" href="https://exptech.com.tw/api/v1/file/eew-info.html?id=${id}">${id}</a>`;
                         const no = document.createElement("th");
                         no.textContent = data[id].eq.no;
-                        const sent = document.createElement("th");
-                        sent.textContent = FULL(data[id].sent);
-                        const get = document.createElement("th");
-                        get.textContent = FULL(data[id].get);
-                        const space = document.createElement("th");
                         const time = document.createElement("th");
                         time.textContent = FULL(data[id].eq.time);
                         const loc = document.createElement("th");
@@ -141,9 +133,6 @@
                         if (data[id].eq.alert) alert.style.backgroundColor = "red";
                         box.appendChild(ID);
                         box.appendChild(no);
-                        box.appendChild(sent);
-                        box.appendChild(get);
-                        box.appendChild(space);
                         box.appendChild(time);
                         box.appendChild(loc);
                         box.appendChild(lat);
@@ -175,7 +164,11 @@
             Now += ":";
             if (now.getSeconds() < 10) Now += "0" + now.getSeconds().toString();
             else Now += now.getSeconds().toString();
-            return Now;
+            Now += ".";
+            if (now.getMilliseconds() < 10) Now += "00" + now.getMilliseconds().toString();
+            else if (now.getMilliseconds() < 100) Now += "0" + now.getMilliseconds().toString();
+            else Now += now.getMilliseconds().toString();
+            return Now.replace(".000", "");
         }
 
         function intensity_int_to_string(int) {
