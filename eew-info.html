@@ -1,0 +1,185 @@
+<html lang="zh-Hant">
+
+<head>
+    <title id="title">CWB EEW History</title>
+    <meta charset="utf-8" />
+    <meta content="CWB EEW History" property="og:title" />
+    <meta content="CWB EEW History | 中央氣象局 地震預警紀錄" property="og:description" />
+    <meta content="https://exptechtw.github.io/" property="og:url" />
+    <meta content="https://raw.githubusercontent.com/ExpTechTW/ExpTechTW.github.io/master/image/main/ExpTech.jpg"
+        property="og:image" />
+</head>
+
+<body style="background-color: #333439;">
+    <div>
+        <div style="padding: 10px;">
+            <a style="color: white;text-decoration: none;" href="https://exptech.com.tw/api/v1/file/eew-infos.html">←
+                返回</a>
+        </div>
+        <div id="ID" style="color: white;font-size: 40px;font-weight: 900;"></div>
+        <table id="eew-table"></table>
+    </div>
+
+    <style>
+        td,
+        th {
+            border: 1px solid darkgrey;
+            padding: 10px;
+        }
+
+        table {
+            color: white;
+            text-align: center;
+            border: 2px solid white;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .intensity_1 {
+            color: white;
+            background-color: #6B7878;
+        }
+
+        .intensity_2 {
+            color: white;
+            background-color: #1E6EE6;
+        }
+
+        .intensity_3 {
+            color: white;
+            background-color: #32B464;
+        }
+
+        .intensity_4 {
+            color: black;
+            background-color: #FFE05D;
+        }
+
+        .intensity_5 {
+            color: black;
+            background-color: #FFAA13;
+        }
+
+        .intensity_6 {
+            color: black;
+            background-color: #EF700F;
+        }
+
+        .intensity_7 {
+            color: white;
+            background-color: #E60000;
+        }
+
+        .intensity_8 {
+            color: white;
+            background-color: #A00000;
+        }
+
+        .intensity_9 {
+            color: white;
+            background-color: #5D0090;
+        }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0/axios.min.js"></script>
+    <script>
+        load();
+
+        function load() {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const params = Object.fromEntries(urlSearchParams.entries());
+            if (!params.id) window.location.href = 'https://exptech.com.tw/api/v1/file/eew-infos.html';
+            document.getElementById("ID").textContent = params.id;
+            axios.get(`https://exptech.com.tw/api/v1/earthquake/eew-info/${params.id}`)
+                .then((res) => {
+                    const eew_table = document.getElementById("eew-table");
+                    eew_table.innerHTML = `<tr>
+                                                <th>No.</th>
+                                                <th>發布時間</th>
+                                                <th>接收時間</th>
+                                                <th></th>
+                                                <th>發震時間</th>
+                                                <th>震央地名</th>
+                                                <th>北緯</th>
+                                                <th>東經</th>
+                                                <th>深度</th>
+                                                <th>規模</th>
+                                                <th>最大預估震度</th>
+                                                <th>警報</th>
+                                            </tr>`;
+                    const data = res.data;
+                    for (let i = 0; i < Object.keys(data).length; i++) {
+                        const id = Object.keys(data)[i];
+                        const box = document.createElement("tr");
+                        const no = document.createElement("th");
+                        no.textContent = data[id].eq.no;
+                        const sent = document.createElement("th");
+                        sent.textContent = FULL(data[id].sent);
+                        const get = document.createElement("th");
+                        get.textContent = FULL(data[id].get);
+                        const space = document.createElement("th");
+                        const time = document.createElement("th");
+                        time.textContent = FULL(data[id].eq.time);
+                        const loc = document.createElement("th");
+                        loc.textContent = data[id].eq.loc;
+                        if (data[id].eq.loc.includes("海")) loc.style.backgroundColor = "darkblue";
+                        else loc.style.backgroundColor = "darkgreen";
+                        const lat = document.createElement("th");
+                        lat.textContent = data[id].eq.lat;
+                        const lon = document.createElement("th");
+                        lon.textContent = data[id].eq.lon;
+                        const depth = document.createElement("th");
+                        depth.textContent = data[id].eq.depth;
+                        const scale = document.createElement("th");
+                        scale.textContent = data[id].eq.scale;
+                        const max = document.createElement("th");
+                        max.textContent = intensity_int_to_string(data[id].eq.max);
+                        max.className = `intensity_${data[id].eq.max}`;
+                        const alert = document.createElement("th");
+                        alert.textContent = (data[id].eq.alert) ? "是" : "否";
+                        if (data[id].eq.alert) alert.style.backgroundColor = "red";
+                        box.appendChild(no);
+                        box.appendChild(sent);
+                        box.appendChild(get);
+                        box.appendChild(space);
+                        box.appendChild(time);
+                        box.appendChild(loc);
+                        box.appendChild(lat);
+                        box.appendChild(lon);
+                        box.appendChild(depth);
+                        box.appendChild(scale);
+                        box.appendChild(max);
+                        box.appendChild(alert);
+                        eew_table.appendChild(box);
+                    }
+                })
+        }
+
+        function FULL(time = Date.now()) {
+            const now = new Date(time);
+            let Now = now.getFullYear().toString();
+            Now += "/";
+            if ((now.getMonth() + 1) < 10) Now += "0" + (now.getMonth() + 1).toString();
+            else Now += (now.getMonth() + 1).toString();
+            Now += "/";
+            if (now.getDate() < 10) Now += "0" + now.getDate().toString();
+            else Now += now.getDate().toString();
+            Now += " ";
+            if (now.getHours() < 10) Now += "0" + now.getHours().toString();
+            else Now += now.getHours().toString();
+            Now += ":";
+            if (now.getMinutes() < 10) Now += "0" + now.getMinutes().toString();
+            else Now += now.getMinutes().toString();
+            Now += ":";
+            if (now.getSeconds() < 10) Now += "0" + now.getSeconds().toString();
+            else Now += now.getSeconds().toString();
+            return Now;
+        }
+
+        function intensity_int_to_string(int) {
+            return (int == 0 || int == 1 || int == 2 || int == 3 || int == 4) ? `${int}級` : (int == 5) ? "5弱" : (int == 6) ? "5強" : (int == 7) ? "6弱" : (int == 8) ? "6強" : "7級";
+        }
+    </script>
+</body>
+
+</html>
