@@ -14,7 +14,7 @@
     <div>
         <div style="padding: 10px;">
             <a style="color: white;text-decoration: none;" href="https://exptech.com.tw/api/v1/file/eew-infos.html">←
-                返回</a>
+                返回列表</a>
         </div>
         <div id="ID" style="color: white;font-size: 40px;font-weight: 900;"></div>
         <table id="eew-table"></table>
@@ -99,7 +99,7 @@
                                                 <th>接收時間</th>
                                                 <th></th>
                                                 <th>發震時間</th>
-                                                <th>震央地名</th>
+                                                <th>震央位置</th>
                                                 <th>北緯</th>
                                                 <th>東經</th>
                                                 <th>深度</th>
@@ -129,9 +129,9 @@
                         const lon = document.createElement("th");
                         lon.textContent = data[id].eq.lon;
                         const depth = document.createElement("th");
-                        depth.textContent = data[id].eq.depth;
+                        depth.textContent = `${data[id].eq.depth} km`;
                         const scale = document.createElement("th");
-                        scale.textContent = data[id].eq.scale;
+                        scale.textContent = `M ${data[id].eq.scale}`;
                         const max = document.createElement("th");
                         max.textContent = intensity_int_to_string(data[id].eq.max);
                         max.className = `intensity_${data[id].eq.max}`;

@@ -92,10 +92,10 @@
                 .then((res) => {
                     const eew_table = document.getElementById("eew-table");
                     eew_table.innerHTML = `<tr>
-                                                <th> ID</th>
+                                                <th>ID</th>
                                                 <th>報數</th>
                                                 <th>發震時間</th>
-                                                <th>震央地名</th>
+                                                <th>震央位置</th>
                                                 <th>北緯</th>
                                                 <th>東經</th>
                                                 <th>深度</th>
@@ -104,7 +104,7 @@
                                                 <th>警報</th>
                                             </tr>`;
                     const data = res.data;
-                    for (let i = 0; i < Object.keys(data).length; i++) {
+                    for (let i = Object.keys(data).length - 1; i >= 0; i--) {
                         const id = Object.keys(data)[i];
                         const box = document.createElement("tr");
                         const ID = document.createElement("th");
@@ -122,9 +122,9 @@
                         const lon = document.createElement("th");
                         lon.textContent = data[id].eq.lon;
                         const depth = document.createElement("th");
-                        depth.textContent = data[id].eq.depth;
+                        depth.textContent = `${data[id].eq.depth} km`;
                         const scale = document.createElement("th");
-                        scale.textContent = data[id].eq.scale;
+                        scale.textContent = `M ${data[id].eq.scale}`;
                         const max = document.createElement("th");
                         max.textContent = intensity_int_to_string(data[id].eq.max);
                         max.className = `intensity_${data[id].eq.max}`;
