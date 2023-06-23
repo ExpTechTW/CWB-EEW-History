@@ -221,11 +221,11 @@
                         lon.setAttribute("data-text", data[id].eq.lon);
 
                         const depth = document.createElement("td");
-                        depth.textContent = data[id].eq.depth;
+                        depth.textContent = `${data[id].eq.depth} ㎞`;
                         depth.setAttribute("data-text", data[id].eq.depth);
 
                         const scale = document.createElement("td");
-                        scale.textContent = data[id].eq.scale.toFixed(1);
+                        scale.textContent = `M ${data[id].eq.scale.toFixed(1)}`;
                         scale.setAttribute("data-text", data[id].eq.scale);
 
                         const max = document.createElement("td");
