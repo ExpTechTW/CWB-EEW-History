@@ -154,7 +154,7 @@
                 return [
                     re && new Date(re).getDate() > t.getDate() ? "（隔日）" : "",
                     `${t.getHours()}:`.padStart(3, "0"),
-                    `${t.getMinutes() + 1}:`.padStart(3, "0"),
+                    `${t.getMinutes()}:`.padStart(3, "0"),
                     `${t.getSeconds()}.`.padStart(3, "0"),
                     `${t.getMilliseconds()}`.padStart(3, "0")
                 ].join("");
