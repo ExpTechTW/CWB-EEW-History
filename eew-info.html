@@ -32,6 +32,9 @@
                     <th>規模</th>
                     <th>最大預估震度</th>
                     <th>警報</th>
+                    <th>機器代號</th>
+                    <th>警報序號</th>
+                    <th>第幾解</th>
                 </tr>
             </thead>
             <tbody id="eew-table"></tbody>
@@ -189,7 +192,7 @@
                         const row = document.createElement("tr");
                         const no = document.createElement("td");
                         no.textContent = data[id].eq.no;
-                        no.setAttribute("data-text", data[id].eq.no);
+                        no.setAttribute("data-text", no.textContent);
 
                         const date = document.createElement("td");
                         date.textContent = timestamp(data[id].sent, true);
@@ -209,35 +212,48 @@
 
                         const loc = document.createElement("td");
                         loc.textContent = data[id].eq.loc;
-                        loc.setAttribute("data-text", data[id].eq.loc);
+                        loc.setAttribute("data-text", loc.textContent);
                         if (data[id].eq.loc.includes("海")) loc.style.backgroundColor = "darkblue";
                         else loc.style.backgroundColor = "darkgreen";
 
                         const lat = document.createElement("td");
                         lat.textContent = data[id].eq.lat;
-                        lat.setAttribute("data-text", data[id].eq.lat);
+                        lat.setAttribute("data-text", lat.textContent);
 
                         const lon = document.createElement("td");
                         lon.textContent = data[id].eq.lon;
-                        lon.setAttribute("data-text", data[id].eq.lon);
+                        lon.setAttribute("data-text", lon.textContent);
 
                         const depth = document.createElement("td");
                         depth.textContent = `${data[id].eq.depth} ㎞`;
-                        depth.setAttribute("data-text", data[id].eq.depth);
+                        depth.setAttribute("data-text", depth.textContent);
 
                         const scale = document.createElement("td");
                         scale.textContent = `M ${data[id].eq.scale.toFixed(1)}`;
-                        scale.setAttribute("data-text", data[id].eq.scale);
+                        scale.setAttribute("data-text", scale.textContent);
 
                         const max = document.createElement("td");
                         max.textContent = intensity_int_to_string(data[id].eq.max);
-                        max.setAttribute("data-text", data[id].eq.max);
+                        max.setAttribute("data-text", max.textContent);
                         max.className = `intensity_${data[id].eq.max}`;
 
                         const alert = document.createElement("td");
                         alert.textContent = (data[id].eq.alert) ? "是" : "否";
-                        alert.setAttribute("data-text", (data[id].eq.alert) ? "是" : "否");
+                        alert.setAttribute("data-text", alert.textContent);
                         if (data[id].eq.alert) alert.style.backgroundColor = "darkred";
+
+                        const type = data[id].eq.type.split("_");
+                        const type_1 = document.createElement("td");
+                        type_1.textContent = type[0];
+                        type_1.setAttribute("data-text", type_1.textContent);
+
+                        const type_2 = document.createElement("td");
+                        type_2.textContent = type[1];
+                        type_2.setAttribute("data-text", type_2.textContent);
+
+                        const type_3 = document.createElement("td");
+                        type_3.textContent = type[2];
+                        type_3.setAttribute("data-text", type_3.textContent);
 
                         row.appendChild(no);
                         row.appendChild(date);
@@ -251,6 +267,9 @@
                         row.appendChild(scale);
                         row.appendChild(max);
                         row.appendChild(alert);
+                        row.appendChild(type_1);
+                        row.appendChild(type_2);
+                        row.appendChild(type_3);
                         frag.appendChild(row)
                     }
 
