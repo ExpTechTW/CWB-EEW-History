@@ -13,7 +13,7 @@
 <body style="background-color: #333439;">
     <div>
         <div style="padding: 10px;">
-            <a style="color: white;text-decoration: none;" href="https://exptech.com.tw/api/v1/file/eew-infos.html">
+            <a style="color: white;text-decoration: none;" href="https://api.exptech.com.tw/file/eew-infos.html">
                 ← 返回列表</a>
         </div>
         <div id="ID" style="color: white;font-size: 40px;font-weight: 900;"></div>
@@ -169,7 +169,7 @@
             const urlSearchParams = new URLSearchParams(window.location.search);
             const params = Object.fromEntries(urlSearchParams.entries());
 
-            if (!params.id) window.location.href = 'https://exptech.com.tw/api/v1/file/eew-infos.html';
+            if (!params.id) window.location.href = 'https://api.exptech.com.tw/file/eew-infos.html';
             document.getElementById("ID").textContent = params.id;
 
             fetch(`https://exptech.com.tw/api/v1/earthquake/eew-info/${params.id}`, {
